@@ -1,0 +1,60 @@
+{
+  "name": "IXPANSION Hub (organism console + workforce)",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "python.analysis.extraPaths": [
+          "."
+        ],
+        "python.testing.unittestArgs": [
+          "-v",
+          "-s",
+          "./ixpansion/tests",
+          "-p",
+          "test*.py"
+        ]
+      }
+    }
+  },
+  "forwardPorts": [
+    8890,
+    5173,
+    8787
+  ],
+  "portsAttributes": {
+    "8890": {
+      "label": "Organism Console",
+      "onAutoForward": "notify"
+    },
+    "5173": {
+      "label": "Control Room (Vite)",
+      "onAutoForward": "notify"
+    },
+    "8787": {
+      "label": "Control Room API",
+      "onAutoForward": "notify"
+    }
+  },
+  "remoteEnv": {
+    "OPENAI_API_KEY": "${localEnv:OPENAI_API_KEY}",
+    "XAI_API_KEY": "${localEnv:XAI_API_KEY}",
+    "HUB_WORKSPACE": "${containerWorkspaceFolder}"
+  },
+  "mounts": [
+    "source=ixpansion-runs,target=${containerWorkspaceFolder}/data,type=volume"
+  ],
+  "postStartCommand": "bash .devcontainer/healthcheck.sh || true"
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg-pulse-06" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#0a0e17" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="400" height="400" rx="20" fill="#0d1320" />
+  <rect width="400" height="400" rx="20" fill="url(#bg-pulse-06)" />
+      <circle cx="200" cy="200" r="62" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.31816497308025504" />
+    <circle cx="200" cy="200" r="84" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.35954192151688247" />
+    <circle cx="200" cy="200" r="106" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.2399720570476926" />
+    <circle cx="200" cy="200" r="128" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.2273949911601189" />
+    <circle cx="200" cy="200" r="150" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.36832166787374754" />
+    <circle cx="200" cy="200" r="172" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.30836427334425665" />
+    <line x1="335.4" y1="165.3" x2="303.6" y2="118.7" stroke="#a78bfa" stroke-width="0.8" opacity="0.25" />
+    <line x1="217.0" y1="132.9" x2="303.6" y2="118.7" stroke="#a78bfa" stroke-width="0.8" opacity="0.25" />
+    <circle cx="335.4" cy="165.3" r="5.3" fill="#a78bfa" opacity="0.8" />
+    <circle cx="266.3" cy="324.3" r="5.3" fill="#a78bfa" opacity="0.8" />
+    <circle cx="213.4" cy="306.6" r="3.4" fill="#a78bfa" opacity="0.8" />
+    <circle cx="146.7" cy="228.6" r="4.5" fill="#a78bfa" opacity="0.8" />
+    <circle cx="114.3" cy="224.1" r="4.9" fill="#a78bfa" opacity="0.8" />
+    <circle cx="82.2" cy="123.5" r="4.6" fill="#a78bfa" opacity="0.8" />
+    <circle cx="217.0" cy="132.9" r="5.4" fill="#a78bfa" opacity="0.8" />
+    <circle cx="303.6" cy="118.7" r="4.6" fill="#a78bfa" opacity="0.8" />
+    <circle cx="200" cy="200" r="25" fill="#a78bfa" opacity="0.12" />
+    <circle cx="200" cy="200" r="8" fill="#a78bfa" opacity="0.9" />
+
+  <text x="200" y="370" text-anchor="middle" fill="#a78bfa" font-family="monospace" font-size="11" font-weight="bold" opacity="0.9">MYTHIC</text>
+</svg>

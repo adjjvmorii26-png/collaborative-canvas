@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg-pulse-05" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#0a0e17" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="400" height="400" rx="20" fill="#0d1320" />
+  <rect width="400" height="400" rx="20" fill="url(#bg-pulse-05)" />
+      <circle cx="200" cy="200" r="62" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.3625217863630299" />
+    <circle cx="200" cy="200" r="84" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.2610496844624351" />
+    <circle cx="200" cy="200" r="106" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.1951665516969111" />
+    <circle cx="200" cy="200" r="128" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.20102601157751113" />
+    <circle cx="200" cy="200" r="150" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.33863101470151763" />
+    <circle cx="200" cy="200" r="172" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.3584875664759254" />
+    <circle cx="200" cy="200" r="194" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.32377603079905787" />
+    <line x1="348.9" y1="184.0" x2="254.0" y2="155.3" stroke="#fbbf24" stroke-width="0.8" opacity="0.25" />
+    <line x1="258.0" y1="260.0" x2="278.7" y2="323.0" stroke="#fbbf24" stroke-width="0.8" opacity="0.25" />
+    <line x1="258.0" y1="260.0" x2="180.3" y2="285.8" stroke="#fbbf24" stroke-width="0.8" opacity="0.25" />
+    <line x1="258.0" y1="260.0" x2="147.7" y2="232.5" stroke="#fbbf24" stroke-width="0.8" opacity="0.25" />
+    <line x1="278.7" y1="323.0" x2="180.3" y2="285.8" stroke="#fbbf24" stroke-width="0.8" opacity="0.25" />
+    <line x1="180.3" y1="285.8" x2="157.0" y2="314.4" stroke="#fbbf24" stroke-width="0.8" opacity="0.25" />
+    <line x1="180.3" y1="285.8" x2="147.7" y2="232.5" stroke="#fbbf24" stroke-width="0.8" opacity="0.25" />
+    <line x1="157.0" y1="314.4" x2="147.7" y2="232.5" stroke="#fbbf24" stroke-width="0.8" opacity="0.25" />
+    <line x1="68.0" y1="216.7" x2="99.3" y2="101.7" stroke="#fbbf24" stroke-width="0.8" opacity="0.25" />
+    <line x1="126.1" y1="145.8" x2="99.3" y2="101.7" stroke="#fbbf24" stroke-width="0.8" opacity="0.25" />
+    <line x1="194.1" y1="82.6" x2="243.5" y2="94.1" stroke="#fbbf24" stroke-width="0.8" opacity="0.25" />
+    <circle cx="348.9" cy="184.0" r="5.1" fill="#fbbf24" opacity="0.8" />
+    <circle cx="258.0" cy="260.0" r="3.4" fill="#fbbf24" opacity="0.8" />
+    <circle cx="278.7" cy="323.0" r="3.1" fill="#fbbf24" opacity="0.8" />
+    <circle cx="180.3" cy="285.8" r="4.5" fill="#fbbf24" opacity="0.8" />
+    <circle cx="157.0" cy="314.4" r="4.3" fill="#fbbf24" opacity="0.8" />
+    <circle cx="147.7" cy="232.5" r="3.5" fill="#fbbf24" opacity="0.8" />
+    <circle cx="68.0" cy="216.7" r="3.6" fill="#fbbf24" opacity="0.8" />
+    <circle cx="126.1" cy="145.8" r="3.5" fill="#fbbf24" opacity="0.8" />
+    <circle cx="99.3" cy="101.7" r="4.1" fill="#fbbf24" opacity="0.8" />
+    <circle cx="194.1" cy="82.6" r="5.4" fill="#fbbf24" opacity="0.8" />
+    <circle cx="243.5" cy="94.1" r="3.5" fill="#fbbf24" opacity="0.8" />
+    <circle cx="254.0" cy="155.3" r="3.1" fill="#fbbf24" opacity="0.8" />
+    <circle cx="200" cy="200" r="25" fill="#fbbf24" opacity="0.12" />
+    <circle cx="200" cy="200" r="8" fill="#fbbf24" opacity="0.9" />
+
+  <text x="200" y="370" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="11" font-weight="bold" opacity="0.9">RARE</text>
+</svg>

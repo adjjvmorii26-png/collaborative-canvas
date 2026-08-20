@@ -1,0 +1,261 @@
+[
+  {
+    "ts": "2026-08-18T15:48:35.900392+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T15:50:19.948694+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T15:50:21.117687+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:09:07.858688+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:09:09.184293+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:09:10.381548+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:11:57.077560+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:12:44.396953+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:12:45.682616+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:12:46.847271+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:21:54.870785+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:21:56.172999+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:21:57.641683+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:23:59.673482+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:24:46.325336+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:24:47.292646+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:24:48.266385+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:35:32.413684+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:35:33.816685+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T16:35:35.439000+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T23:43:45.432333+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T23:43:46.938681+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-18T23:43:48.622295+00:00",
+    "score": 82.5,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T02:02:57.916904+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T02:14:10.193482+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T03:02:26.684051+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T03:02:29.386408+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T03:03:39.187601+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T03:03:42.430130+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T03:04:15.715928+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T03:04:18.387249+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T03:22:42.693568+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T04:26:05.955057+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T04:26:23.741571+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T04:26:56.641029+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T16:48:31.883965+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-19T16:48:35.630684+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  }
+]

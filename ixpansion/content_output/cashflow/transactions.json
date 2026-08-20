@@ -1,0 +1,222 @@
+[
+  {
+    "id": "revenue-20260817-235745-0",
+    "timestamp": "2026-08-17T23:57:45.755397",
+    "type": "revenue",
+    "category": "usdt",
+    "amount": "500.00",
+    "description": "YouTube ad revenue",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "expenditure-20260817-235745-1",
+    "timestamp": "2026-08-17T23:57:45.756905",
+    "type": "expenditure",
+    "category": "usdt",
+    "amount": "200.50",
+    "description": "Google Ads campaign",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "revenue-20260817-235827-2",
+    "timestamp": "2026-08-17T23:58:27.797393",
+    "type": "revenue",
+    "category": "ads",
+    "amount": "500.00",
+    "description": "YouTube ad revenue",
+    "asset": "ads",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "expenditure-20260817-235827-3",
+    "timestamp": "2026-08-17T23:58:27.801346",
+    "type": "expenditure",
+    "category": "ads",
+    "amount": "200.50",
+    "description": "Google Ads campaign",
+    "asset": "ads",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "revenue-20260818-000010-4",
+    "timestamp": "2026-08-18T00:00:10.237746",
+    "type": "revenue",
+    "category": "ads",
+    "amount": "500.00",
+    "description": "YouTube ad revenue",
+    "asset": "ads",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "expenditure-20260818-000010-5",
+    "timestamp": "2026-08-18T00:00:10.241497",
+    "type": "expenditure",
+    "category": "ads",
+    "amount": "200.50",
+    "description": "Google Ads campaign",
+    "asset": "ads",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "revenue-20260818-002457-6",
+    "timestamp": "2026-08-18T00:24:57.697189",
+    "type": "revenue",
+    "category": "usdt",
+    "amount": "1500.50",
+    "description": "YouTube Partner Program revenue",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "expenditure-20260818-002457-7",
+    "timestamp": "2026-08-18T00:24:57.701867",
+    "type": "expenditure",
+    "category": "usdt",
+    "amount": "500.25",
+    "description": "Google Ads campaign",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "revenue-20260818-002547-8",
+    "timestamp": "2026-08-18T00:25:47.509462",
+    "type": "revenue",
+    "category": "usdt",
+    "amount": "1500.50",
+    "description": "YouTube Partner Program revenue",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "expenditure-20260818-002547-9",
+    "timestamp": "2026-08-18T00:25:47.514153",
+    "type": "expenditure",
+    "category": "usdt",
+    "amount": "500.25",
+    "description": "Google Ads campaign",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "revenue-20260818-003338-10",
+    "timestamp": "2026-08-18T00:33:38.285104",
+    "type": "revenue",
+    "category": "usdt",
+    "amount": "1500.50",
+    "description": "YouTube Partner Program revenue",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "expenditure-20260818-003338-11",
+    "timestamp": "2026-08-18T00:33:38.290036",
+    "type": "expenditure",
+    "category": "usdt",
+    "amount": "500.25",
+    "description": "Google Ads campaign",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "revenue-20260818-003424-12",
+    "timestamp": "2026-08-18T00:34:24.772446",
+    "type": "revenue",
+    "category": "usdt",
+    "amount": "1500.50",
+    "description": "YouTube Partner Program revenue",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "expenditure-20260818-003424-13",
+    "timestamp": "2026-08-18T00:34:24.776908",
+    "type": "expenditure",
+    "category": "usdt",
+    "amount": "500.25",
+    "description": "Google Ads campaign",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "revenue-20260818-003732-14",
+    "timestamp": "2026-08-18T00:37:32.251487",
+    "type": "revenue",
+    "category": "usdt",
+    "amount": "1500.50",
+    "description": "YouTube Partner Program revenue",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "expenditure-20260818-003732-15",
+    "timestamp": "2026-08-18T00:37:32.255163",
+    "type": "expenditure",
+    "category": "usdt",
+    "amount": "500.25",
+    "description": "Google Ads campaign",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "revenue-20260818-003925-16",
+    "timestamp": "2026-08-18T00:39:25.584486",
+    "type": "revenue",
+    "category": "usdt",
+    "amount": "1500.50",
+    "description": "YouTube Partner Program revenue",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "expenditure-20260818-003925-17",
+    "timestamp": "2026-08-18T00:39:25.589264",
+    "type": "expenditure",
+    "category": "usdt",
+    "amount": "500.25",
+    "description": "Google Ads campaign",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "revenue-20260818-004142-18",
+    "timestamp": "2026-08-18T00:41:42.711618",
+    "type": "revenue",
+    "category": "usdt",
+    "amount": "1500.50",
+    "description": "YouTube Partner Program revenue",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  },
+  {
+    "id": "expenditure-20260818-004142-19",
+    "timestamp": "2026-08-18T00:41:42.714020",
+    "type": "expenditure",
+    "category": "usdt",
+    "amount": "500.25",
+    "description": "Google Ads campaign",
+    "asset": "usdt",
+    "tx_hash": null,
+    "metadata": {}
+  }
+]

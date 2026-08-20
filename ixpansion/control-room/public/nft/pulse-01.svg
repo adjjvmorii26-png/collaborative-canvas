@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg-pulse-01" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#22d3a8" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#0a0e17" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="400" height="400" rx="20" fill="#0d1320" />
+  <rect width="400" height="400" rx="20" fill="url(#bg-pulse-01)" />
+      <circle cx="200" cy="200" r="62" fill="none" stroke="#22d3a8" stroke-width="1" opacity="0.21053451535859716" />
+    <circle cx="200" cy="200" r="84" fill="none" stroke="#22d3a8" stroke-width="1" opacity="0.1506919147958671" />
+    <circle cx="200" cy="200" r="106" fill="none" stroke="#22d3a8" stroke-width="1" opacity="0.3127150076395703" />
+    <line x1="110.1" y1="285.2" x2="87.4" y2="178.0" stroke="#22d3a8" stroke-width="0.8" opacity="0.25" />
+    <line x1="87.4" y1="178.0" x2="175.3" y2="126.4" stroke="#22d3a8" stroke-width="0.8" opacity="0.25" />
+    <circle cx="343.4" cy="206.5" r="5.5" fill="#22d3a8" opacity="0.8" />
+    <circle cx="236.8" cy="343.9" r="3.9" fill="#22d3a8" opacity="0.8" />
+    <circle cx="110.1" cy="285.2" r="5.6" fill="#22d3a8" opacity="0.8" />
+    <circle cx="87.4" cy="178.0" r="3.5" fill="#22d3a8" opacity="0.8" />
+    <circle cx="175.3" cy="126.4" r="5.9" fill="#22d3a8" opacity="0.8" />
+    <circle cx="233.3" cy="96.8" r="5.0" fill="#22d3a8" opacity="0.8" />
+    <circle cx="200" cy="200" r="25" fill="#22d3a8" opacity="0.12" />
+    <circle cx="200" cy="200" r="8" fill="#22d3a8" opacity="0.9" />
+
+  <text x="200" y="370" text-anchor="middle" fill="#5b6b85" font-family="monospace" font-size="11" font-weight="bold" opacity="0.9">COMMON</text>
+</svg>

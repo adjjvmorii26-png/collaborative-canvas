@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IXPANSION Collaborative Canvas</title>
+    <style>
+        :root {
+            --bg: #0a0f1a;
+            --bg-secondary: #121a2e;
+            --primary: #6d83ff;
+            --primary-hover: #9b5cff;
+            --accent: #ff5ca8;
+            --text: #e8edf7;
+            --muted: #8aa0c6;
+            --card-bg: #1a1f2e;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
+        header { 
+            text-align: center; 
+            padding: 2rem 0; 
+            border-bottom: 1px solid #2a3a4e;
+            margin-bottom: 2rem; 
+        }
+        
+        h1 { color: var(--primary); font-size: 2rem; margin-bottom: 0.5rem; }
+        .subtitle { color: var(--muted); font-size: 0.9rem; }
+        
+        .stories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        
+        .story-card { 
+            background: var(--card-bg); 
+            border: 1px solid #2a3a4e; 
+            border-radius: 12px; 
+            padding: 1.5rem; 
+            transition: transform 0.2s; 
+        }
+        .story-card:hover { transform: translateY(-2px); }
+        .story-card h3 { margin: 0 0 0.5rem; color: var(--primary); }
+        .story-card .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem; }
+        .story-card .preview { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+        
+        .story-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+        
+        .new-story-card { 
+            background: linear-gradient(135deg, #1a1f2e, #121a2e); 
+            border: 2px dashed #6d83ff; 
+            border-radius: 12px; 
+            padding: 3rem 2rem; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+        }
+        .new-story-card:hover { background: #1a253a; border-color: #9b5cff; }
+        .new-story-card:hover h3 { color: #9b5cff; }
+        .new-story-card h3 { color: var(--text); margin-bottom: 1rem; }
+        .new-story-card p { color: var(--muted); font-size: 0.9rem; }
+        
+        .story-card .story-actions { margin-top: 1rem; display: flex; gap: 0.5rem; }
+        .story-card .story-actions a { 
+            background: #2a3a4e; 
+            padding: 0.5rem 1rem; 
+            border-radius: 20px; 
+            color: var(--text); 
+            text-decoration: none; 
+            font-size: 0.85rem; 
+            transition: background 0.2s; 
+        }
+        .story-card .story-actions a:hover { background: #3a4a5e; }
+        
+        .story-card .story-actions .ai-btn { background: #6d83ff; }
+        .story-card .story-actions .human-btn { background: #6d83ff; }
+        
+        .story-form { 
+            background: var(--card-bg); 
+            border: 1px solid #2a3a4e; 
+            border-radius: 12px; 
+            padding: 1.5rem; 
+            margin-bottom: 2rem; 
+        }
+        .story-form h3 { margin: 0 0 1rem; color: var(--primary); }
+        
+        .story-form textarea { 
+            width: 100%; 
+            padding: 0.8rem; 
+            background: #1a1f2e; 
+            border: 1px solid #2a3a4e; 
+            border-radius: 8px; 
+            color: var(--text); 
+            font-size: 1rem; 
+            resize: vertical; 
+            min-height: 100px; 
+        }
+        .story-form button { 
+            background: var(--primary); 
+            color: #fff; 
+            border: none; 
+            padding: 0.8rem 1.5rem; 
+            border-radius: 8px; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            margin-top: 1rem; 
+            transition: background 0.2s; 
+        }
+        .story-form button:hover { background: #9b5cff; }
+        
+        .story-card .story-actions .view-btn { background: #6d83ff; color: white; }
+        .story-card .story-actions .continue-btn { background: #9b5cff; color: white; }
+        
+        @media (max-width: 600px) {
+            .stories-grid { grid-template-columns: 1fr; }
+            .new-story-card { padding: 2rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>IXPANSION Collaborative Canvas</h1>
+        <p class="subtitle">Co-create stories with AI</h1>
+    </header>
+    
+    <div class="new-story-card" onclick="window.location.hash='new-story'">
+        <h3>Create New Story</h3>
+        <p>Click to start a new collaborative story with AI</h3>
+    </div>
+    
+    <div class="stories-grid" id="stories-grid">
+        <!-- Stories will be loaded here -->
+    </div>
+    
+    <div id="new-story-form" style="display: none;">
+        <div class="story-form">
+            <h3>Create New Story</h3>
+            <textarea id="new-story-title" placeholder="Story title..."></textarea>
+            <textarea id="new-story-content" placeholder="Start the story..."></textarea>
+            <button onclick="createNewStory()">Create Story</button>
+        </div>
+    </div>
+    
+    <script>
+        // Load stories on page load
+        function loadStories() {
+            fetch('/api/stories')
+                .then(res => res.json())
+                .then(data => {
+                    const grid = document.getElementById('stories-grid');
+                    grid.innerHTML = '';
+                    
+                    data.stories.forEach(story => {
+                        const card = document.createElement('div');
+                        card.className = 'story-card';
+                        card.innerHTML = `
+                            <h3>${story.title}</h3>
+                            <div class="meta">Turn ${story.turn}, ${story.actors.length} contributors</div>
+                            <div class="preview">${story.content.length > 0 ? story.content[story.content.length - 1].message.substring(0, 80) + (story.content.length > 1 ? '...' : '') : 'No content yet'}</div>
+                            <div class="story-actions">
+                                <a href="/story/${story.id}" class="view-btn">View Story</a>
+                                <a href="#" class="continue-btn" onclick="continueStory('${story.id}')">AI Continue</a>
+                            </div>
+                        </div>`;
+                        grid.appendChild(card);
+                    });
+                    
+                    // Show add story form if no stories or add button
+                    if (data.stories.length === 0) {
+                        document.getElementById('new-story-form').style.display = 'block';
+                    }
+                });
+        }
+        
+        // Load stories on page load and when hash changes
+        loadStories();
+        window.addEventListener('hashchange', loadStories);
+        
+        // Create new story form
+        document.getElementById('new-story-form').style.display = 'block';
+        
+        document.getElementById('new-story-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            createNewStory();
+        });
+        
+        function createNewStory() {
+            const title = document.getElementById('new-story-title').value || 'Untitled Story';
+            const content = document.getElementById('new-story-content').value || 'Once upon a time...';
+            
+            fetch('/api/stories', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, id: Date.now().toString() })
+            })
+            .then(res => res.json())
+            .then(data => {
+                // Reset form
+                document.getElementById('new-story-title').value = '';
+                document.getElementById('new-story-content').value = '';
+                
+                // Reload stories
+                loadStories();
+                // Navigate to new story
+                window.location.hash = data.id;
+            })
+            .catch(err => console.error('Error:', err));
+        });
+        
+        // Continue story functionality
+        function continueStory(storyId) {
+            fetch('/api/stories/' + storyId + '/ai-continue', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(res => res.json())
+            .then(data => {
+                // Reload stories
+                loadStories();
+                // Navigate to story
+                window.location.hash = storyId;
+            })
+            .catch(err => console.error('Error:', err));
+        }
+    </script>
+</body>
+</html>

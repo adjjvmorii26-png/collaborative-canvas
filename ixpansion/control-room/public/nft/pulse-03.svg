@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg-pulse-03" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#0a0e17" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="400" height="400" rx="20" fill="#0d1320" />
+  <rect width="400" height="400" rx="20" fill="url(#bg-pulse-03)" />
+      <circle cx="200" cy="200" r="62" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.3682821651065833" />
+    <circle cx="200" cy="200" r="84" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.29492200717794637" />
+    <circle cx="200" cy="200" r="106" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.34169726523659893" />
+    <circle cx="200" cy="200" r="128" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.32282149793970283" />
+    <circle cx="200" cy="200" r="150" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.30851353393348774" />
+    <circle cx="200" cy="200" r="172" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.3099424904182127" />
+    <circle cx="200" cy="200" r="194" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.2293660292002717" />
+    <line x1="102.2" y1="235.2" x2="119.5" y2="141.0" stroke="#60a5fa" stroke-width="0.8" opacity="0.25" />
+    <circle cx="260.9" cy="184.1" r="4.0" fill="#60a5fa" opacity="0.8" />
+    <circle cx="247.1" cy="310.4" r="5.6" fill="#60a5fa" opacity="0.8" />
+    <circle cx="102.2" cy="235.2" r="4.5" fill="#60a5fa" opacity="0.8" />
+    <circle cx="119.5" cy="141.0" r="5.7" fill="#60a5fa" opacity="0.8" />
+    <circle cx="215.1" cy="61.2" r="4.1" fill="#60a5fa" opacity="0.8" />
+    <circle cx="200" cy="200" r="25" fill="#60a5fa" opacity="0.12" />
+    <circle cx="200" cy="200" r="8" fill="#60a5fa" opacity="0.9" />
+
+  <text x="200" y="370" text-anchor="middle" fill="#60a5fa" font-family="monospace" font-size="11" font-weight="bold" opacity="0.9">UNCOMMON</text>
+</svg>

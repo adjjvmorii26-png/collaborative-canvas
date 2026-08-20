@@ -19,6 +19,6 @@ def build_provider(provider: str, llm_cfg) -> LLMProvider:
     """Factory: 'openai' (OpenAI-compatible) or 'mock' (offline deterministic)."""
     if provider == "mock":
         return MockProvider()
-    if provider in {"openai", "openai-compatible", "ollama", "openrouter", "azure"}:
+    if provider in {"openai", "openai-compatible", "ollama", "openrouter", "azure", "xai", "grok"}:
         return OpenAICompatProvider(llm_cfg)
     raise ValueError(f"Unknown provider '{provider}' (expected 'openai' or 'mock')")

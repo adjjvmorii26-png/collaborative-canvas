@@ -24,6 +24,9 @@ class OpenAICompatProvider:
     def __init__(self, cfg) -> None:
         self.cfg = cfg
         self.endpoint = cfg.endpoint()
+        # Reflect the actual backend in the provider name for reporting.
+        if "api.x.ai" in (cfg.base_url or ""):
+            self.name = "xai"
 
     # ------------------------------------------------------------------ #
     def chat(

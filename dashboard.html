@@ -92,7 +92,197 @@
   <div class="section-title"><span class="dot"></span><h2>IXPANSION Experiments</h2></div>
   <table>
     <thead><tr><th>ID</th><th>Experiment</th><th>Phase</th><th>Status</th></tr></thead>
-    <tbody id="exp"></tbody>
+    <tbody id="exp"></tbody>  <div class="section-title"><span class="dot"></span><h2>Cash Flow & Ads</h2></div>
+  <div class="grid">
+    <div class="card" style="border-top-color: #39e6c3;">
+      <h3>Cash Flow Summary</h3>
+      <div class="stats" style="margin: 12px 0;">
+        <div class="stat"><div class="k" id="cf-revenue">0</div><div class="l">Revenue</div></div>
+        <div class="stat"><div class="k" id="cf-expenditure">0</div><div class="l">Expenditure</div></div>
+        <div class="stat"><div class="k" id="cf-net">0</div><div class="l">Net</div></div>
+      </div>
+      <div id="cf-by-asset" style="max-height: 150px; overflow-y: auto;"></div>
+    </div>
+    <div class="card" style="border-top-color: #ffce6a;">
+      <h3>YouTube Ads</h3>
+      <div class="stats" style="margin: 12px 0;">
+        <div class="stat"><div class="k" id="yt-campaigns">0</div><div class="l">Active Campaigns</div></div>
+        <div class="stat"><div class="k" id="yt-spend">0</div><div class="l">Total Spend</div></div>
+        <div class="stat"><div class="k" id="yt-revenue">0</div><div class="l">Ad Revenue</div></div>
+      </div>
+      <div id="yt-by-campaign" style="max-height: 150px; overflow-y: auto;"></div>
+    </div>
+    <div class="card" style="border-top-color: #a78bfa;">
+      <h3>API Keys</h3>
+      <div class="stats" style="margin: 12px 0;">
+        <div class="stat"><div class="k" id="ak-total">0</div><div class="l">Managed</div></div>
+        <div class="stat"><div class="k" id="ak-xai">0</div><div class="l">XAI / Grok</div></div>
+        <div class="stat"><div class="k" id="ak-types">0</div><div class="l">Key Types</div></div>
+      </div>
+      <div id="ak-by-type" style="max-height: 150px; overflow-y: auto;"></div>
+    </div>
+  </div>
+  <script>
+  // Initialize integration
+  const INTEGRATION = (function(){
+    const baseDir = "ixpansion/content_output";
+    
+    // Load cash flow data
+    async function loadCashFlow() {
+      try {
+        const resp = await fetch(`${baseDir}/cashflow/transactions.json`);
+        const transactions = await resp.json();
+        return transactions;
+      } catch (e) {
+        console.warn("Could not load cash flow:", e);
+        return [];
+      }
+    }
+    
+    // Load API keys
+    async function loadApiKeys() {
+      try {
+        const resp = await fetch(`${baseDir}/api_keys.json`);
+        const keys = await resp.json();
+        return keys;
+      } catch (e) {
+        console.warn("Could not load API keys:", e);
+        return {};
+      }
+    }
+
+    // Load YouTube campaigns
+    async function loadYouTubeCampaigns() {
+      try {
+        const resp = await fetch(`${baseDir}/youtube/campaigns.json`);
+        const campaigns = await resp.json();
+        return campaigns;
+      } catch (e) {
+        console.warn("Could not load YouTube campaigns:", e);
+        return [];
+      }
+    }
+    
+    // Render API keys summary (masked, grouped by type)
+    function renderApiKeys(keys) {
+      const total = Object.keys(keys).length;
+      const counts = {};
+      for (const k of Object.values(keys)) {
+        const t = k.key_type || "custom";
+        counts[t] = (counts[t] || 0) + 1;
+      }
+      document.getElementById("ak-total").textContent = total;
+      document.getElementById("ak-xai").textContent = counts["xai"] || 0;
+      document.getElementById("ak-types").textContent = Object.keys(counts).length;
+
+      const el = document.getElementById("ak-by-type");
+      el.innerHTML = "";
+      const order = ["xai", "openai", "google", "youtube", "anthropic", "openrouter", "custom"];
+      const types = Object.keys(counts).sort((a, b) => {
+        const ia = order.indexOf(a), ib = order.indexOf(b);
+        return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+      });
+      types.forEach(t => {
+        const row = document.createElement("div");
+        row.className = "run";
+        const badge = t === "xai" ? " <b>(primary)</b>" : "";
+        row.innerHTML = `<span>${t}: ${counts[t]}${badge}</span>`;
+        el.appendChild(row);
+      });
+    }
+
+    // Render cash flow summary
+    function renderCashFlowSummary(transactions) {
+      let revenue = 0, expenditure = 0;
+      const byAsset = {};
+      
+      transactions.forEach(tx => {
+        const amount = parseFloat(tx.amount);
+        if (tx.type === "revenue") {
+          revenue += amount;
+          byAsset[tx.asset] = (byAsset[tx.asset] || 0) + amount;
+        } else if (tx.type === "expenditure") {
+          expenditure += amount;
+          byAsset[tx.asset] = (byAsset[tx.asset] || 0) - amount;
+        }
+      });
+      
+      document.getElementById("cf-revenue").textContent = revenue.toFixed(2);
+      document.getElementById("cf-expenditure").textContent = expenditure.toFixed(2);
+      document.getElementById("cf-net").textContent = (revenue - expenditure).toFixed(2);
+      
+      // Render by asset
+      const assetEl = document.getElementById("cf-by-asset");
+      assetEl.innerHTML = "";
+      Object.entries(byAsset).forEach(([asset, amount]) => {
+        const sign = amount >= 0 ? "+" : "";
+        const el = document.createElement("div");
+        el.className = "run";
+        el.innerHTML = `<span>${asset}: ${sign}${amount.toFixed(2)}</span>`;
+        assetEl.appendChild(el);
+      });
+    }
+    
+    // Render YouTube ads summary
+    function renderYouTubeAds(campaigns) {
+      const totalSpend = campaigns.reduce((sum, c) => sum + parseFloat(c.spend || 0), 0);
+      const totalRevenue = campaigns.reduce((sum, c) => sum + parseFloat(c.revenue || 0), 0);
+      const totalClicks = campaigns.reduce((sum, c) => sum + (c.clicks || 0), 0);
+      const totalImpressions = campaigns.reduce((sum, c) => sum + (c.impressions || 0), 0);
+      const overallCTR = totalImpressions > 0 ? (totalClicks / totalImpressions * 100).toFixed(2) : "0.00";
+      
+      document.getElementById("yt-campaigns").textContent = campaigns.length;
+      document.getElementById("yt-spend").textContent = totalSpend.toFixed(2);
+      document.getElementById("yt-revenue").textContent = totalRevenue.toFixed(2);
+      
+      // Render by campaign
+      const campaignEl = document.getElementById("yt-by-campaign");
+      campaignEl.innerHTML = "";
+      campaigns.forEach(camp => {
+        const ctr = camp.impressions > 0 ? ((camp.clicks / camp.impressions) * 100).toFixed(2) : "0.00";
+        const el = document.createElement("div");
+        el.className = "run";
+        el.innerHTML = `
+          <div><b>${camp.name}</b></div>
+          <div>Spend: $${parseFloat(camp.spend || 0).toFixed(2)} | Rev: $${parseFloat(camp.revenue || 0).toFixed(2)}</div>
+          <div>CTR: ${ctr}% | Clicks: ${camp.clicks} | Impr: ${camp.impressions}</div>
+        `;
+        campaignEl.appendChild(el);
+      });
+    }
+    
+    return {
+      loadCashFlow,
+      loadYouTubeCampaigns,
+      loadApiKeys,
+      renderCashFlowSummary,
+      renderYouTubeAds
+    };
+  })();
+  
+  // Initialize on page load
+  document.addEventListener("DOMContentLoaded", async () => {
+    const integration = INTEGRATION;
+    const transactions = await integration.loadCashFlow();
+    const campaigns = await integration.loadYouTubeCampaigns();
+    const keys = await integration.loadApiKeys();
+    integration.renderCashFlowSummary(transactions);
+    integration.renderYouTubeAds(campaigns);
+    integration.renderApiKeys(keys);
+  });
+  
+  // Refresh periodically (every 30 seconds)
+  setInterval(async () => {
+    const integration = INTEGRATION;
+    const transactions = await integration.loadCashFlow();
+    const campaigns = await integration.loadYouTubeCampaigns();
+    integration.renderCashFlowSummary(transactions);
+    integration.renderYouTubeAds(campaigns);
+    const keys = await integration.loadApiKeys();
+    integration.renderApiKeys(keys);
+  }, 30000);
+  
+</script>
   </table>
 
   
@@ -113,7 +303,7 @@
     <button id="go">Run with workforce</button>
   </div>
 
-  <footer><a href="metrics.html">Repo metrics ↗</a> · self-contained hub dashboard · no external requests · built by the workforce.</footer>
+  <footer><a href="metrics.html">Repo metrics ↗</a> · <a href="ixpansion/organism-console/">Organism Console ↗</a> · self-contained hub dashboard · no external requests · built by the workforce.</footer>
 </div>
 <div id="toast"></div>
 

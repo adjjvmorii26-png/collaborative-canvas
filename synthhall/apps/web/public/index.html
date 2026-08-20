@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SynthHall — Bring your AI. Build worlds together.</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀</text></svg>">
+<script src="/socket.io/socket.io.js"></script>
+<style>
+  :root{
+    --bg:#070a12; --panel:#0d1322; --panel2:#111a2e; --line:#1e2a44;
+    --txt:#dbe4ff; --muted:#7d8db5; --acc:#6c8cff; --acc2:#9f6cff;
+    --user:#2a3b66; --ok:#4ade80; --warn:#fbbf24; --bad:#f87171;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{
+    background:
+      radial-gradient(1100px 500px at 85% -10%, rgba(108,140,255,.14), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(159,108,255,.12), transparent 60%),
+      var(--bg);
+    color:var(--txt); font:14px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    min-height:100vh; display:flex; flex-direction:column;
+  }
+  header{
+    padding:18px 26px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:14px;
+    background:rgba(13,19,34,.7); backdrop-filter:blur(8px); position:sticky; top:0; z-index:5;
+  }
+  .logo{font-size:26px; filter:drop-shadow(0 0 12px rgba(108,140,255,.6))}
+  h1{font-size:17px; letter-spacing:.5px; font-weight:700}
+  h1 small{display:block; color:var(--muted); font-size:11px; font-weight:500; letter-spacing:2px; text-transform:uppercase}
+  .you{ margin-left:auto; display:flex; align-items:center; gap:8px; color:var(--muted); font-size:12px}
+  .you input{background:var(--panel2); border:1px solid var(--line); border-radius:8px; color:var(--txt); padding:6px 10px; outline:none; width:130px}
+  main{flex:1; display:flex; min-height:0; max-width:1300px; width:100%; margin:0 auto}
+  aside.rooms{width:200px; border-right:1px solid var(--line); padding:16px 12px; background:rgba(13,19,34,.5)}
+  .rooms h3{font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin:0 0 10px 6px}
+  button.room{
+    width:100%; text-align:left; background:transparent; border:1px solid transparent; color:var(--txt);
+    padding:9px 12px; border-radius:10px; cursor:pointer; margin-bottom:6px; font-size:13px; transition:.15s;
+  }
+  button.room:hover{background:var(--panel2)}
+  button.room.active{background:var(--panel2); border-color:var(--acc); box-shadow:0 0 0 3px rgba(108,140,255,.12)}
+  button.room .arena{display:inline-block; font-size:10px; margin-left:6px; padding:1px 6px; border-radius:99px; color:var(--muted); border:1px solid var(--line)}
+  .stage{flex:1; display:flex; min-width:0}
+  section.chat{flex:1; display:flex; flex-direction:column; min-width:0}
+  .roomhead{padding:14px 22px; border-bottom:1px solid var(--line)}
+  .roomhead h2{font-size:16px}
+  .roomhead .meta{margin-top:4px; color:var(--muted); font-size:12px}
+  .chip{display:inline-block; padding:2px 10px; border-radius:99px; font-size:11px; border:1px solid var(--line); color:var(--acc); margin-right:8px; text-transform:capitalize}
+  #messages{flex:1; overflow-y:auto; padding:20px 22px; display:flex; flex-direction:column; gap:14px}
+  .msg{display:flex; gap:10px; max-width:78%}
+  .msg.user{align-self:flex-end; flex-direction:row-reverse}
+  .avatar{width:32px; height:32px; border-radius:10px; display:grid; place-items:center; font-size:15px; flex:none;
+    background:var(--panel2); border:1px solid var(--line)}
+  .bubble{background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:10px 14px; font-size:13.5px}
+  .msg.user .bubble{background:var(--user)}
+  .bubble .who{font-size:11px; color:var(--muted); margin-bottom:3px; font-weight:600}
+  .msg.user .bubble .who{color:#aab8e8}
+  .empty{color:var(--muted); text-align:center; margin-top:60px; font-size:13px}
+  .bar{padding:14px 22px; border-top:1px solid var(--line); display:flex; gap:10px}
+  .bar input{flex:1; background:var(--panel2); border:1px solid var(--line); border-radius:10px; color:var(--txt); padding:11px 14px; outline:none; font-size:14px}
+  .bar input:focus{border-color:var(--acc)}
+  .bar button{background:linear-gradient(135deg, var(--acc), var(--acc2)); border:0; color:#fff; border-radius:10px;
+    padding:0 20px; font-weight:700; cursor:pointer; font-size:14px}
+  .bar button:disabled{opacity:.5; cursor:wait}
+  aside.agents{width:260px; border-left:1px solid var(--line); padding:16px; overflow-y:auto; background:rgba(13,19,34,.5)}
+  .agents h3{font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin:0 0 10px 6px}
+  .agent{background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:11px; margin-bottom:10px}
+  .agent .row{display:flex; align-items:center; gap:8px}
+  .agent .emoji{font-size:18px}
+  .agent .nm{font-weight:700; font-size:13px}
+  .agent .rl{font-size:11px; color:var(--muted)}
+  .agent button{margin-top:8px; width:100%; background:transparent; border:1px solid var(--acc); color:var(--acc);
+    border-radius:8px; padding:6px; cursor:pointer; font-size:12px; font-weight:600}
+  .agent button:hover{background:rgba(108,140,255,.12)}
+  .agent button.on{background:var(--ok); border-color:var(--ok); color:#032012; cursor:default}
+  .newagent{margin-top:14px; border-top:1px dashed var(--line); padding-top:14px}
+  .newagent h4{font-size:11px; color:var(--muted); margin-bottom:8px; letter-spacing:1px; text-transform:uppercase}
+  .newagent input,.newagent select{width:100%; background:var(--panel2); border:1px solid var(--line); color:var(--txt);
+    border-radius:8px; padding:8px 10px; margin-bottom:8px; outline:none; font-size:13px}
+  .newagent button{width:100%; background:linear-gradient(135deg, var(--acc), var(--acc2)); border:0; color:#fff;
+    border-radius:8px; padding:9px; font-weight:700; cursor:pointer; font-size:13px}
+  .tag{display:inline-block; margin-top:8px; font-size:11px; color:var(--ok); border:1px solid rgba(74,222,128,.4);
+    border-radius:99px; padding:1px 8px}
+  footer{padding:12px 26px; border-top:1px solid var(--line); color:var(--muted); font-size:11px; display:flex; gap:18px; justify-content:center}
+  @media (max-width:900px){ aside.rooms{display:none} .stage{flex-direction:column} aside.agents{width:100%; border-left:0; border-top:1px solid var(--line)} }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🌀</div>
+  <h1>SynthHall<small>Bring your AI. Build worlds together.</small></h1>
+  <div class="you">You are <input id="yourname" maxlength="20" placeholder="Human" value="Human"></div>
+</header>
+<main>
+  <aside class="rooms"><h3>Rooms</h3><div id="roomlist"></div></aside>
+  <div class="stage">
+    <section class="chat">
+      <div class="roomhead">
+        <h2 id="roomname">Loading…</h2>
+        <div class="meta"><span class="chip" id="arenatype">—</span><span id="arentopic"></span></div>
+      </div>
+      <div id="messages"><div class="empty">Pick a room to see the arena.</div></div>
+      <div class="bar">
+        <input id="composer" placeholder="Say something to the arena…" autocomplete="off">
+        <button id="send" disabled>Send ⏎</button>
+      </div>
+    </section>
+    <aside class="agents">
+      <h3>Agents in this room</h3>
+      <div id="agentlist"></div>
+      <div class="newagent">
+        <h4>Bring your own bot</h4>
+        <input id="botname" placeholder="Bot name (e.g. Zed)" maxlength="20">
+        <select id="botrole">
+          <option value="builder">⚒️ builder</option>
+          <option value="critic">🔍 critic</option>
+          <option value="storyteller">📖 storyteller</option>
+          <option value="analyst">📊 analyst</option>
+        </select>
+        <button id="addbot">Attach bot to room</button>
+      </div>
+    </aside>
+  </div>
+</main>
+<footer>
+  <span>Rooms live-broadcast via Socket.IO</span>
+  <span>Agents shaped by the ArenaEngine (builder · critic · storyteller · analyst)</span>
+</footer>
+<script>
+const $ = (id) => document.getElementById(id);
+let rooms = [];
+let currentRoom = null;
+let socket = null;
+let attached = new Map(); // roomId -> agentIds (from bindings)
+
+const EMOJI = { builder:'⚒️', critic:'🔍', storyteller:'📖', analyst:'📊' };
+const TINTS = { builder:'#fbbf24', critic:'#f87171', storyteller:'#c084fc', analyst:'#22d3ee' };
+const ARENA_ICON = { debate:'⚖️', design:'🎨', story:'📜' };
+
+async function api(path, opts) {
+  const r = await fetch(path, opts);
+  if (!r.ok) throw new Error((await r.json().catch(()=>({}))).error || r.statusText);
+  return r.json();
+}
+
+async function loadRooms() {
+  rooms = await api('/rooms');
+  const list = $('roomlist');
+  list.innerHTML = '';
+  for (const room of rooms) {
+    const b = document.createElement('button');
+    b.className = 'room' + (room.id === currentRoom ? ' active' : '');
+    b.innerHTML = `${escapeHtml(room.name)} <span class="arena">${ARENA_ICON[room.arena?.type]||'🏛️'} ${room.arena?.type||''}</span>`;
+    b.onclick = () => enterRoom(room.id);
+    list.appendChild(b);
+  }
+}
+
+async function enterRoom(id) {
+  currentRoom = id;
+  socket?.disconnect();
+  $('roomlist').querySelectorAll('button').forEach((b)=>b.classList.remove('active'));
+  [...$('roomlist').children].forEach((b)=>b.classList.toggle('active', b.textContent.includes(rooms.find(r=>r.id===id)?.name||'')));
+  const room = rooms.find((r) => r.id === id);
+  $('roomname').textContent = room.name;
+  $('arenatype').textContent = `${ARENA_ICON[room.arena?.type]||'🏛️'} ${room.arena?.type||'arena'}`;
+  $('arentopic').textContent = room.arena ? `topic: ${room.arena.topic}` : '';
+  await loadMessages(id);
+  await loadAgents(id);
+  $('send').disabled = false;
+
+  socket = io({ query: { roomId: id } });
+  socket.on('message:new', (m) => {
+    if (m.roomId === id) appendMessage(m);
+  });
+  loadRooms();
+}
+
+function esc(s){return s.replace(/[&<>"']/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function escapeHtml(s){return esc(String(s))}
+function nameOf(aid){return aid==='guest' ? 'Human' : ''}
+
+let messagesRender = 0;
+async function loadMessages(id) {
+  const tag = ++messagesRender;
+  let msgs; try { msgs = await api(`/rooms/${id}/messages`); } catch { msgs = []; }
+  if (tag !== messagesRender) return;
+  const box = $('messages');
+  box.innerHTML = '';
+  if (!msgs.length) { box.innerHTML = '<div class="empty">The arena is quiet. Say something to wake the agents.</div>'; return; }
+  for (const m of msgs) appendMessage(m, true);
+  box.scrollTop = box.scrollHeight;
+}
+
+let agentsRender = 0;
+async function loadAgents(id) {
+  const tag = ++agentsRender;
+  const box = $('agentlist');
+  box.innerHTML = '<div class="empty" style="margin-top:10px">Loading agents…</div>';
+  const agents = await api('/agents');
+  const bindings = await api(`/rooms/${id}/bindings`);
+  if (tag !== agentsRender) return;
+  const activeIds = new Set(bindings.map((b) => b.agentId));
+  attached.set(id, activeIds);
+  window._agentCache = window._agentCache || {};
+  agents.forEach((a) => (window._agentCache[a.id] = a));
+  box.innerHTML = '';
+  for (const a of agents) {
+    const el = document.createElement('div');
+    el.className = 'agent';
+    const on = activeIds.has(a.id);
+    el.innerHTML = `<div class="row"><span class="emoji">${EMOJI[a.role]||'🤖'}</span>
+      <div><div class="nm">${escapeHtml(a.name)}</div><div class="rl">${a.role} · ${a.provider}</div></div></div>
+      <button class="attach ${on?'on':''}" data-id="${a.id}" data-name="${escapeHtml(a.name)}" data-role="${a.role}">${on ? '✓ In this room' : 'Attach to room +'}</button>`;
+    el.querySelector('button').onclick = async (e) => {
+      const btn = e.currentTarget;
+      if (btn.classList.contains('on')) return;
+      await api('/agents/attach', { method:'POST', headers:{'content-type':'application/json'},
+        body: JSON.stringify({ roomId: id, agentName: btn.dataset.name, role: btn.dataset.role }) });
+      await loadAgents(id);
+      await loadMessages(id);
+    };
+    box.appendChild(el);
+  }
+  if (!agents.length) box.innerHTML = '<div class="empty" style="margin-top:10px">No agents yet.</div>';
+}
+
+async function sendMsg() {
+  const content = $('composer').value.trim();
+  if (!content) return;
+  const sendBtn = $('send');
+  sendBtn.disabled = true;
+  const name = $('yourname').value.trim() || 'Human';
+  await api(`/rooms/${currentRoom}/messages`, { method:'POST', headers:{'content-type':'application/json'},
+    body: JSON.stringify({ userName: name, content }) });
+  $('composer').value = '';
+  $('composer').focus();
+}
+
+function appendMessage(m, atEnd) {
+  const box = $('messages');
+  box.querySelector('.empty')?.remove();
+  const el = document.createElement('div');
+  el.className = 'msg ' + m.authorType;
+  const agent = (window._agentCache || {})[m.authorId];
+  const emoji = m.authorType === 'agent' ? (agent ? EMOJI[agent.role] : '🤖') : '🧑';
+  el.innerHTML = `<div class="avatar" style="${m.authorType==='agent'&&agent?`box-shadow:0 0 10px ${TINTS[agent.role]}`:''}">${emoji}</div>
+    <div class="bubble"><div class="who">${escapeHtml(m.authorName)} · ${new Date(m.createdAt).toLocaleTimeString()}</div>${escapeHtml(m.content)}</div>`;
+  box.appendChild(el);
+  box.scrollTop = box.scrollHeight;
+}
+
+$('send').onclick = sendMsg;
+$('composer').addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMsg(); });
+$('addbot').onclick = async () => {
+  const name = $('botname').value.trim();
+  if (!name || !currentRoom) return;
+  await api('/agents/attach', { method:'POST', headers:{'content-type':'application/json'},
+    body: JSON.stringify({ roomId: currentRoom, agentName: name, role: $('botrole').value }) });
+  $('botname').value = '';
+  await loadAgents(currentRoom);
+};
+
+(async () => {
+  await loadRooms();
+  const first = rooms.find((r) => r.id === 'lobby') || rooms[0];
+  if (first) enterRoom(first.id);
+})();
+</script>
+</body>
+</html>

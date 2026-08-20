@@ -28,6 +28,9 @@ class LLMConfig:
     api_key: str = ""
     base_url: str = "https://api.openai.com/v1"
     model: str = "gpt-4o-mini"
+    xai_api_key: str = ""
+    xai_base_url: str = "https://api.x.ai/v1"
+    xai_model: str = "grok-3-mini"
     temperature: float = 0.3
     max_tokens: int = 4096
     timeout_seconds: float = 120.0
@@ -94,6 +97,9 @@ ENV_MAP = {
     "api_key": "OPENAI_API_KEY",
     "base_url": "OPENAI_BASE_URL",
     "model": "OPENAI_MODEL",
+    "xai_api_key": "XAI_API_KEY",
+    "xai_base_url": "XAI_BASE_URL",
+    "xai_model": "XAI_MODEL",
     "temperature": "OPENAI_TEMPERATURE",
     "max_tokens": "OPENAI_MAX_TOKENS",
     "timeout_seconds": "OPENAI_TIMEOUT_SECONDS",

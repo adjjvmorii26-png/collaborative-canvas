@@ -49,12 +49,12 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{r.name:<16} {r.description} ({len(r.steps)} steps)")
         return 0
     if args.cmd == "auto":
-        from .core.router import route, load_catalog
+        from .core.router import route as pick_route, load_catalog
 
         catalog = load_catalog()
         engine = Engine(make_provider(mock=args.mock), output_dir=args.out)
         for i, inp in enumerate(args.inputs, 1):
-            picked = route(inp, catalog).recipe
+            picked = pick_route(inp, catalog).recipe
             result = engine.run(picked, inp, out_name=f"auto-{i}")
             print(f"auto[{i}] {inp[:40]:<42} -> {picked.name} -> {result.report_path}")
         return 0

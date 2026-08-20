@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IXPANSION Organism Console</title>
+<style>
+  :root{
+    --bg:#070b14; --panel:#0e1524; --panel2:#0b1120; --ink:#e9eef9; --mut:#8ba0c4;
+    --line:rgba(255,255,255,.08); --ok:#39e6c3; --warn:#ffce6a; --bad:#ff7a7a;
+    --grad:linear-gradient(135deg,#39e6c3,#5ca8ff calc(55%),#9b5cff);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%}
+  body{
+    font:15px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    color:var(--ink);background:
+      radial-gradient(900px 520px at 15% -10%,rgba(57,230,195,.16),transparent 60%),
+      radial-gradient(760px 520px at 105% 12%,rgba(155,92,255,.18),transparent 55%),
+      radial-gradient(600px 500px at 50% 115%,rgba(255,92,168,.10),transparent 60%),
+      var(--bg);
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:30px 20px 70px}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:14px}
+  .core{width:46px;height:46px;border-radius:50%;background:var(--grad);box-shadow:0 0 34px rgba(57,230,195,.5);position:relative;animation:beat 3s ease-in-out infinite}
+  .core::after{content:"";position:absolute;inset:10px;border-radius:50%;background:var(--bg);opacity:.5}
+  .core::before{content:"◆";position:absolute;inset:0;display:grid;place-items:center;font-size:16px;z-index:1}
+  @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+  h1{font-size:22px;margin:0;letter-spacing:.4px}
+  .sub{color:var(--mut);font-size:13px;margin-top:2px}
+  .score{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 18px}
+  .score .num{font-size:30px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .score .l{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+  .bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:8px}
+  .bar i{display:block;height:100%;border-radius:99px;background:var(--grad);width:0;transition:width .8s ease}
+
+  .layout{display:grid;grid-template-columns:1fr 340px;gap:18px;margin-top:26px}
+  @media (max-width:960px){.layout{grid-template-columns:1fr}}
+
+  .section-title{display:flex;align-items:center;gap:10px;margin:34px 0 14px}
+  .section-title h2{margin:0;font-size:17px}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--grad);box-shadow:0 0 12px #39e6c3}
+
+  .organs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+  .organ{position:relative;border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(180deg,var(--panel),var(--panel2));border-top:3px solid var(--ac,#6d83ff);overflow:hidden;transition:transform .2s ease}
+  .organ:hover{transform:translateY(-3px)}
+  .organ .icon{font-size:20px;margin-bottom:8px;opacity:.9}
+  .organ h3{margin:0 0 2px;font-size:15px}
+  .organ .blurb{color:var(--mut);font-size:12px;margin-bottom:10px;min-height:34px}
+  .organ .detail{font-size:12px;color:#cdd9f2;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  .organ .score{display:inline-flex;font-weight:800;font-size:16px;color:var(--ac)}
+  .organ .mini{position:absolute;right:12px;top:12px;font-size:10px;color:var(--mut);letter-spacing:.08em;text-transform:uppercase}
+
+  .side{display:flex;flex-direction:column;gap:18px}
+  .card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:18px;padding:16px}
+  .card h3{margin:0 0 10px;font-size:15px}
+  .kv{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .kv:last-child{border-bottom:none}
+  .kv b{color:#cdd9f2;font-weight:600}
+  .row{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{cursor:pointer;border:1px solid var(--line);color:var(--ink);background:var(--panel2);padding:8px 12px;border-radius:10px;font-size:12px;transition:.2s}
+  .btn:hover{border-color:rgba(255,255,255,.25)}
+  .btn.active{background:var(--grad);border-color:transparent;color:#06121a;font-weight:700}
+  input,select{background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px 11px;border-radius:10px;font-size:13px;width:100%;margin-bottom:8px}
+  label{display:block;font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 4px}
+
+  .atoms{max-height:320px;overflow-y:auto}
+  .atom{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:12px}
+  .atom:last-child{border-bottom:none}
+  .atom .tag{flex:0 0 auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;padding:3px 7px;border-radius:8px;background:rgba(57,230,195,.1);border:1px solid rgba(57,230,195,.3);color:var(--ok)}
+  .atom .steps{color:var(--mut);margin-top:2px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}
+
+  .pulses{max-height:220px;overflow-y:auto}
+  .pulse{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px}
+  .pulse .when{color:var(--mut);white-space:nowrap}
+  .pill{font-size:10px;padding:3px 8px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
+  .pill.ok{color:var(--ok);border-color:rgba(57,230,195,.4)}
+  .pill.xai{color:var(--ok);border-color:rgba(57,230,195,.4)}
+  .pill.openai{color:#9cb4ff;border-color:rgba(156,180,255,.4)}
+  footer{color:var(--mut);font-size:12px;margin-top:44px;text-align:center}
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(40px);opacity:0;background:var(--grad);color:#06121a;font-weight:700;padding:11px 18px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.5);transition:.35s;z-index:9}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .trend{display:flex;align-items:flex-end;gap:4px;height:74px;margin-top:6px}
+  .trend i{flex:1;background:linear-gradient(180deg,#39e6c3,#5ca8ff);border-radius:4px 4px 0 0;min-height:3px;opacity:.85;transition:height .5s ease}
+  .trend i.now{background:linear-gradient(180deg,#9b5cff,#ff5ca8);opacity:1}
+  .creature{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .creature:last-child{border-bottom:none}
+  .creature .emoji{font-size:26px;filter:drop-shadow(0 0 10px rgba(57,230,195,.4))}
+  .creature .name{font-weight:700;font-size:14px}
+  .creature .mood{font-size:11px;color:var(--mut);margin-top:2px}
+  .creature .badge{margin-left:auto;font-size:10px;padding:3px 8px;border-radius:8px;background:rgba(57,230,195,.12);border:1px solid rgba(57,230,195,.3);color:#9cffe8}
+  .creature.cat .badge{background:rgba(255,122,122,.12);border-color:rgba(255,122,122,.3);color:#ffb3b3}
+  .creature.bird .badge{background:rgba(155,92,255,.12);border-color:rgba(155,92,255,.3);color:#c9b3ff}
+  .heatmap{display:flex;flex-direction:column;gap:5px;margin-top:4px}
+  .hm-row{display:grid;grid-template-columns:150px repeat(7,1fr) 36px;gap:4px;align-items:center}
+  .hm-label{font-size:11px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hm-cell{height:26px;border-radius:6px;border:1px solid var(--line);display:grid;place-items:center;font-size:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .hm-day{color:var(--mut);text-align:center;font-size:10px;height:18px;border:none}
+  .hm-total{text-align:center;font-size:11px;font-weight:700;color:#cdd9f2}
+  @media (max-width:720px){.hm-row{grid-template-columns:110px repeat(7,1fr) 30px}}
+  .bus{max-height:240px;overflow-y:auto}
+  .bus-msg{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px}
+  .bus-msg:last-child{border-bottom:none}
+  .bus-msg .dot2{flex:0 0 auto;width:8px;height:8px;border-radius:50%;margin-top:4px;background:var(--ok)}
+  .bus-msg.warn .dot2{background:var(--warn)}
+  .bus-msg.crit .dot2{background:var(--bad)}
+  .bus-msg b{color:#cdd9f2}
+  .bus-msg .body{color:var(--mut);margin-top:2px}
+  .when{color:var(--mut);font-size:10px}
+  textarea{background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:9px 11px;border-radius:10px;font-size:13px;width:100%;margin-bottom:8px;font-family:inherit;resize:vertical}
+  .vote{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 8px;border-radius:8px;border:1px solid var(--line);margin:2px 4px 0 0;background:var(--panel2)}
+  .vote.approve{color:var(--ok);border-color:rgba(57,230,195,.4)}
+  .vote.reject{color:var(--bad);border-color:rgba(255,122,122,.4)}
+  .vote.abstain{color:var(--mut)}
+  .verdict{font-size:14px;font-weight:800;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="core"></div>
+      <div>
+        <h1>IXPANSION Organism Console</h1>
+        <div class="sub">body map · organs · atoms · pulses</div>
+      </div>
+    </div>
+    <div class="score">
+      <div>
+        <div class="l">Symbiote Index</div>
+        <div class="num" id="symbiote">--</div>
+      </div>
+      <div style="min-width:120px">
+        <div class="l">Body status</div>
+        <div id="body-status" style="font-size:13px;color:var(--mut)">loading…</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="section-title"><span class="dot"></span><h2>Organs</h2><span class="pill" id="updated">—</span></div>
+  <div class="organs" id="organs"></div>
+
+  <div class="section-title"><span class="dot"></span><h2>Metabolic heatmap <span style="color:var(--mut);font-weight:400">(7 days)</span></h2></div>
+  <div class="card"><div class="heatmap" id="heatmap"><div style="color:var(--mut)">loading…</div></div></div>
+
+  <div class="layout">
+    <div>
+      <div class="section-title"><span class="dot"></span><h2>Atoms <span style="color:var(--mut);font-weight:400">(recipe steps)</span></h2></div>
+      <div class="card"><div class="atoms" id="atoms"><div style="color:var(--mut)">loading…</div></div></div>
+
+      <div class="section-title"><span class="dot"></span><h2>Kick a Pulse</h2></div>
+      <div class="card">
+        <label>Experiment input</label>
+        <input id="pulse-input" value="Organism pulse: keep the hub synchronized" />
+        <label>Recipe</label>
+        <select id="pulse-recipe">
+          <option value="summary">summary</option>
+          <option value="research-brief">research-brief</option>
+          <option value="organism-sync">organism-sync</option>
+          <option value="redteam-scan">redteam-scan</option>
+          <option value="release-note">release-note</option>
+        </select>
+        <div class="row">
+          <button class="btn" id="pulse-go">▶ Run pulse (mock)</button>
+        </div>
+        <pre id="pulse-out" style="display:none;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:11px;margin-top:10px;overflow-x:auto;white-space:pre-wrap"></pre>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="card">
+        <h3>Breath (provider)</h3>
+        <div class="kv"><span>Provider</span><b id="p-provider">—</b></div>
+        <div class="kv"><span>Model</span><b id="p-model">—</b></div>
+        <div class="kv"><span>Endpoint</span><b id="p-endpoint">—</b></div>
+        <label>Switch respiratory preference</label>
+        <div class="row">
+          <button class="btn" data-provider="openai">OpenAI</button>
+          <button class="btn" data-provider="xai">Grok (XAI)</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Vitals (metabolism)</h3>
+        <div id="vitals"><div style="color:var(--mut)">loading…</div></div>
+        <div class="kv"><span>Burn rate</span><b id="m-burn">—</b></div>
+      </div>
+
+      <div class="card">
+        <h3>Score trend <span id="trend-delta" style="font-size:11px;color:var(--mut)"></span></h3>
+        <div class="trend" id="trend"><div style="color:var(--mut)">loading…</div></div>
+      </div>
+
+      <div class="card">
+        <h3>Nutrients (API keys)</h3>
+        <div class="kv"><span>Managed</span><b id="k-total">—</b></div>
+        <div id="k-types" style="margin-top:6px"></div>
+        <label>Add XAI key</label>
+        <input id="k-value" placeholder="xai-…" />
+        <div class="row">
+          <button class="btn" id="k-add">Add key</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Circulation</h3>
+        <div class="kv"><span>Revenue</span><b id="c-rev">—</b></div>
+        <div class="kv"><span>Expenditure</span><b id="c-exp">—</b></div>
+        <div class="kv"><span>Net</span><b id="c-net">—</b></div>
+        <div class="kv"><span>Portfolio</span><b id="c-port">—</b></div>
+      </div>
+
+      <div class="card">
+        <h3>Broadcast</h3>
+        <div class="kv"><span>Channels</span><b id="y-ch">—</b></div>
+        <div class="kv"><span>Campaigns</span><b id="y-camp">—</b></div>
+        <div class="kv"><span>Ad spend</span><b id="y-spend">—</b></div>
+        <div class="kv"><span>CTR</span><b id="y-ctr">—</b></div>
+      </div>
+
+      <div class="card">
+        <h3>Message bus</h3>
+        <div class="row" style="margin-bottom:8px">
+          <button class="btn" id="bus-send">Post organ signal</button>
+        </div>
+        <div class="bus" id="bus"><div style="color:var(--mut)">loading…</div></div>
+      </div>
+
+      <div class="card">
+        <h3>Cross-agent consensus</h3>
+        <label>Proposal</label>
+        <textarea id="consensus-input" rows="2">schedule a daily recipe pulse with a cost budget and fallback</textarea>
+        <div class="row"><button class="btn" id="consensus-go">Run consensus</button></div>
+        <div id="consensus-out" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card">
+        <h3>Grow a custom organ</h3>
+        <label>ID</label><input id="o-id" placeholder="lymphatic" />
+        <label>Label</label><input id="o-label" placeholder="Lymphatic System" />
+        <label>Source path</label><input id="o-source" placeholder="ixpansion/content_output/lymph" />
+        <label>Accent (#rrggbb)</label><input id="o-accent" placeholder="#8be9fd" />
+        <div class="row"><button class="btn" id="o-add">Add organ</button></div>
+      </div>
+
+      <div class="card">
+        <h3>Creatures <span style="font-size:11px;color:var(--mut)">rat · cat · bird</span></h3>
+        <div id="creatures"><div style="color:var(--mut)">summoning…</div></div>
+      </div>
+
+      <div class="card">
+        <h3>Recent pulses</h3>
+        <div class="pulses" id="pulses"><div style="color:var(--mut)">loading…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>self-contained organism console · no external requests · built by the workforce</footer>
+</div>
+<div id="toast"></div>
+
+<script>
+const state = { provider: null };
+let toastTimer = null;
+function toast(msg){
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+}
+function fmt(n, d=0){ return Number(n).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function renderOrgans(body){
+  const el = document.getElementById("organs");
+  el.innerHTML = "";
+  for (const organ of body.organs){
+    const card = document.createElement("div");
+    card.className = "organ";
+    card.style.setProperty("--ac", organ.accent);
+    card.innerHTML = `
+      <div class="mini">${esc(organ.id)}</div>
+      <div class="icon">${esc(organ.icon)}</div>
+      <h3>${esc(organ.label)}</h3>
+      <div class="blurb">${esc(organ.blurb)}</div>
+      <div class="detail"><span class="score">${Math.round(organ.score)}</span><span>${esc(organ.detail)}</span></div>
+      <div class="bar"><i style="width:${organ.score}%;background:${organ.accent}"></i></div>`;
+    el.appendChild(card);
+  }
+}
+
+function renderAtoms(body){
+  const el = document.getElementById("atoms");
+  el.innerHTML = "";
+  if (!body.recipes.length){ el.innerHTML = '<div style="color:var(--mut)">no recipes yet</div>'; return; }
+  for (const recipe of body.recipes){
+    const steps = (recipe.steps && recipe.steps.length) ? recipe.steps.join(" → ") : "—";
+    const d = document.createElement("div");
+    d.className = "atom";
+    d.innerHTML = `<span class="tag">${esc(recipe.recipe)}</span><div>${esc(recipe.description)}<div class="steps">${esc(steps)}</div></div>`;
+    el.appendChild(d);
+  }
+}
+
+function renderPulses(body){
+  const el = document.getElementById("pulses");
+  el.innerHTML = "";
+  if (!body.pulses.length){ el.innerHTML = '<div style="color:var(--mut)">no pulses yet</div>'; return; }
+  for (const p of body.pulses){
+    const when = p.modified ? new Date(p.modified).toLocaleString() : "—";
+    const d = document.createElement("div");
+    d.className = "pulse";
+    d.innerHTML = `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.id)}</span><span class="when">${esc(when)}</span>`;
+    el.appendChild(d);
+  }
+}
+
+function renderSide(body){
+  state.provider = body.provider.provider;
+  document.getElementById("p-provider").textContent = body.provider.provider || "—";
+  document.getElementById("p-model").textContent = body.provider.model || "—";
+  document.getElementById("p-endpoint").textContent = body.provider.base_url || "—";
+  document.querySelectorAll(".btn[data-provider]").forEach(b => {
+    b.classList.toggle("active", b.dataset.provider === state.provider);
+  });
+
+  document.getElementById("k-total").textContent = body.keys.count;
+  const kt = document.getElementById("k-types");
+  kt.innerHTML = "";
+  for (const [type, n] of Object.entries(body.keys.by_type || {})){
+    const pill = document.createElement("span");
+    pill.className = "pill " + esc(type);
+    pill.style.marginRight = "6px";
+    pill.textContent = `${type}: ${n}`;
+    kt.appendChild(pill);
+  }
+
+  document.getElementById("c-rev").textContent = "$" + fmt(body.cashflow.revenue, 2);
+  document.getElementById("c-exp").textContent = "$" + fmt(body.cashflow.expenditure, 2);
+  document.getElementById("c-net").textContent = "$" + fmt(body.cashflow.net, 2);
+  const port = body.cashflow.portfolio_assets.length + " assets / " + body.cashflow.portfolio_nfts + " NFTs";
+  document.getElementById("c-port").textContent = port;
+
+  document.getElementById("y-ch").textContent = body.youtube.channels;
+  document.getElementById("y-camp").textContent = body.youtube.campaigns;
+  document.getElementById("y-spend").textContent = "$" + fmt(body.youtube.spend, 2);
+  document.getElementById("y-ctr").textContent = (body.youtube.ctr * 100).toFixed(2) + "%";
+
+  const ts = new Date(body.ts).toLocaleTimeString();
+  document.getElementById("updated").textContent = "updated " + ts;
+}
+
+function renderVitals(meta){
+  if (!meta) return;
+  const el = document.getElementById("vitals");
+  el.innerHTML = "";
+  for (const v of meta.vitals){
+    const color = v.status === "healthy" ? "var(--ok)" : v.status === "warning" ? "var(--warn)" : "var(--bad)";
+    const row = document.createElement("div");
+    row.className = "kv";
+    row.innerHTML = `<span>${esc(v.label)}</span><b style="color:${color}">${esc(v.value)}</b>`;
+    el.appendChild(row);
+  }
+  document.getElementById("m-burn").textContent = "$" + fmt(meta.burn_rate, 2) + "/mo";
+}
+
+async function loadBus(){
+  try{
+    const resp = await fetch("/api/bus");
+    const data = await resp.json();
+    const el = document.getElementById("bus");
+    el.innerHTML = "";
+    if (!data.messages.length){ el.innerHTML = '<div style="color:var(--mut)">no signals yet</div>'; return; }
+    for (const m of data.messages){
+      const row = document.createElement("div");
+      row.className = "bus-msg " + esc(m.severity);
+      row.innerHTML = `<span class="dot2"></span><div><b>${esc(m.organ)}</b> · ${esc(m.topic)} <span class="when">${esc(new Date(m.ts).toLocaleTimeString())}</span><div class="body">${esc(m.body)}</div></div>`;
+      el.appendChild(row);
+    }
+  }catch(e){ console.warn(e); }
+}
+
+async function loadHeatmap(){
+  try{
+    const resp = await fetch("/api/heatmap");
+    const data = await resp.json();
+    const el = document.getElementById("heatmap");
+    el.innerHTML = "";
+    if (!data.rows){ el.innerHTML = '<div style="color:var(--mut)">no heatmap data</div>'; return; }
+    const head = document.createElement("div");
+    head.className = "hm-row";
+    head.innerHTML = `<span class="hm-label">Organ</span>` +
+      Array.from({length:data.days},(_,i)=>`<span class="hm-cell hm-day">D${data.days-1-i}</span>`).join("") +
+      `<span class="hm-total">Σ</span>`;
+    el.appendChild(head);
+    for (const row of data.rows){
+      const div = document.createElement("div");
+      div.className = "hm-row";
+      div.innerHTML = `<span class="hm-label" title="${esc(row.label)}">${esc(row.label)}</span>` +
+        row.buckets.map(b => {
+          if (!b) return `<span class="hm-cell" style="background:rgba(255,255,255,.03)"></span>`;
+          const alpha = Math.min(0.9, (b/100)*0.9).toFixed(2);
+          return `<span class="hm-cell" style="background:${row.accent}${alpha>0.5?"ee":"99"};color:${b>55?"#06121a":"var(--mut)"}">${Math.round(b)}</span>`;
+        }).join("") +
+        `<span class="hm-total">${row.total}</span>`;
+      el.appendChild(div);
+    }
+  }catch(e){ console.warn(e); }
+}
+
+async function runConsensus(){
+  const proposal = document.getElementById("consensus-input").value.trim() || "organism pulse";
+  const el = document.getElementById("consensus-out");
+  el.innerHTML = '<div style="color:var(--mut)">agents deliberating…</div>';
+  try{
+    const data = await post("/api/consensus", {proposal});
+    const vcolor = data.verdict === "consensus reached" ? "var(--ok)" : data.verdict === "consensus blocked" ? "var(--bad)" : "var(--warn)";
+    let html = `<div class="verdict" style="color:${vcolor}">${esc(data.verdict.toUpperCase())}</div>`;
+    html += `<div style="font-size:12px;color:var(--mut);margin-bottom:8px">${data.approve} approve · ${data.reject} reject · ${data.abstain} abstain · confidence ${(data.confidence*100).toFixed(0)}%</div>`;
+    html += data.votes.map(v => `<span class="vote ${esc(v.stance)}">${esc(v.agent)} · ${esc(v.stance)} ${(v.confidence*100).toFixed(0)}%</span>`).join("");
+    el.innerHTML = html;
+  }catch(e){
+    el.innerHTML = '<div style="color:var(--bad)">error: ' + esc(e.message) + '</div>';
+  }
+}
+
+async function loadHistory(){
+  try{
+    const resp = await fetch("/api/history");
+    const data = await resp.json();
+    const hist = data.history || [];
+    const el = document.getElementById("trend");
+    el.innerHTML = "";
+    if (!hist.length){ el.innerHTML = '<div style="color:var(--mut)">no trend yet</div>'; return; }
+    const last = hist.slice(-14);
+    const scores = last.map(h => Number(h.score));
+    const min = Math.min(...scores);
+    const span = Math.max(1, Math.max(...scores) - min);
+    for (const h of last){
+      const hgt = 8 + ((Number(h.score) - min) / span) * 62;
+      const bar = document.createElement("i");
+      bar.style.height = hgt.toFixed(1) + "px";
+      bar.title = h.score + " @ " + new Date(h.ts).toLocaleString();
+      el.appendChild(bar);
+    }
+    el.lastChild.classList.add("now");
+    if (last.length > 1){
+      const delta = Number(last[last.length-1].score) - Number(last[0].score);
+      const dEl = document.getElementById("trend-delta");
+      dEl.textContent = (delta >= 0 ? "+" : "") + delta.toFixed(1);
+      dEl.style.color = delta >= 0 ? "var(--ok)" : "var(--bad)";
+    }
+  }catch(e){ console.warn(e); }
+}
+
+async function renderCreatures(data){
+  const el = document.getElementById("creatures");
+  if (!data || !data.rat){ el.innerHTML = '<div style="color:var(--mut)">no creatures</div>'; return; }
+  const map = {
+    rat: {emoji: "\u1F400", cls: "rat", label: "Rat", mood: data.rat.mood, note: data.rat.note, badge: data.rat.target || ""},
+    cat: {emoji: "\u1F408", cls: "cat", label: "Cat", mood: data.cat.stance, note: data.cat.note, badge: data.cat.stance},
+    bird:{emoji: "\u1F426", cls: "bird", label: "Bird", mood: data.bird.mood, note: data.bird.note, badge: data.bird.top || ""},
+  };
+  el.innerHTML = "";
+  for (const key of ["rat","cat","bird"]){
+    const c = map[key];
+    const row = document.createElement("div");
+    row.className = "creature " + c.cls;
+    row.innerHTML = `<span class="emoji">${c.emoji}</span><div><div class="name">${esc(c.label)}</div><div class="mood">${esc(c.mood)} · ${esc(c.note)}</div></div><span class="badge">${esc(c.badge)}</span>`;
+    el.appendChild(row);
+  }
+}
+
+async function refresh(){
+  try{
+    const resp = await fetch("/api/body");
+    const body = await resp.json();
+    document.getElementById("symbiote").textContent = Math.round(body.symbiote_score);
+    const status = body.symbiote_score >= 75 ? "healthy" : body.symbiote_score >= 50 ? "stable" : "fragile";
+    const statusEl = document.getElementById("body-status");
+    statusEl.textContent = status;
+    statusEl.style.color = body.symbiote_score >= 75 ? "var(--ok)" : body.symbiote_score >= 50 ? "var(--warn)" : "var(--bad)";
+    renderOrgans(body);
+    renderAtoms(body);
+    renderPulses(body);
+    renderSide(body);
+    renderVitals(body.metabolism);
+    loadBus();
+    loadHeatmap();
+    loadHistory();
+    renderCreatures(body.creatures);
+  }catch(e){
+    console.warn(e);
+    document.getElementById("body-status").textContent = "offline";
+  }
+}
+
+async function post(path, payload){
+  const resp = await fetch(path, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(payload)
+  });
+  const data = await resp.json().catch(() => ({}));
+  if (!resp.ok) throw new Error(data.error || "request failed");
+  return data;
+}
+
+document.querySelectorAll(".btn[data-provider]").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    try{
+      await post("/api/provider", {provider: btn.dataset.provider});
+      toast("provider switched to " + btn.dataset.provider);
+      refresh();
+    }catch(e){ toast("error: " + e.message); }
+  });
+});
+
+document.getElementById("k-add").addEventListener("click", async () => {
+  const value = document.getElementById("k-value").value.trim();
+  if (!value){ toast("enter a key value"); return; }
+  try{
+    await post("/api/keys", {name: "Grok (XAI)", key_type: "xai", key_value: value, description: "added from Organism Console"});
+    document.getElementById("k-value").value = "";
+    toast("XAI key registered (masked in console)");
+    refresh();
+  }catch(e){ toast("error: " + e.message); }
+});
+
+document.getElementById("pulse-go").addEventListener("click", async () => {
+  const btn = document.getElementById("pulse-go");
+  btn.disabled = true;
+  btn.textContent = "running…";
+  const out = document.getElementById("pulse-out");
+  out.style.display = "block";
+  out.textContent = "pulse in flight…";
+  try{
+    const result = await post("/api/pulse", {
+      input: document.getElementById("pulse-input").value,
+      recipe: document.getElementById("pulse-recipe").value,
+      mock: true
+    });
+    out.textContent = (result.stdout || "") + (result.stderr ? "\n[stderr]\n" + result.stderr : "");
+    toast(result.ok ? "pulse complete" : "pulse failed");
+    refresh();
+  }catch(e){
+    out.textContent = "error: " + e.message;
+    toast("pulse error");
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "▶ Run pulse (mock)";
+  }
+});
+
+const busSignals = [
+  {organ:"circulatory", topic:"blood-flow", severity:"info", body:"Cash flow refreshed; net positive"},
+  {organ:"nervous", topic:"synapse", severity:"info", body:"Agent consensus engine online"},
+  {organ:"immune", topic:"scan", severity:"info", body:"Red-team sweep completed"},
+  {organ:"respiratory", topic:"breath", severity:"info", body:"Provider heartbeat detected"},
+  {organ:"digestive", topic:"enzyme", severity:"info", body:"Recipe catalog digested"},
+  {organ:"broadcast", topic:"signal", severity:"info", body:"Campaign pulse broadcast"},
+  {organ:"memory", topic:"synapse", severity:"info", body:"Memory consolidated"},
+];
+document.getElementById("bus-send").addEventListener("click", async () => {
+  const pick = busSignals[Math.floor(Math.random() * busSignals.length)];
+  try{
+    await post("/api/bus", pick);
+    toast("signal posted: " + pick.organ);
+    loadBus();
+    loadHeatmap();
+  }catch(e){ toast("error: " + e.message); }
+});
+document.getElementById("consensus-go").addEventListener("click", runConsensus);
+document.getElementById("o-add").addEventListener("click", async () => {
+  const id = document.getElementById("o-id").value.trim();
+  const label = document.getElementById("o-label").value.trim();
+  const source = document.getElementById("o-source").value.trim();
+  if (!id || !label || !source){ toast("fill id, label, and source"); return; }
+  try{
+    await post("/api/organs", {
+      id, label, source,
+      accent: document.getElementById("o-accent").value.trim() || "#8be9fd",
+      blurb: "Custom organ grown from the console."
+    });
+    document.getElementById("o-id").value = "";
+    document.getElementById("o-label").value = "";
+    document.getElementById("o-source").value = "";
+    toast("organ grown: " + id);
+    refresh();
+  }catch(e){ toast("error: " + e.message); }
+});
+refresh();
+setInterval(refresh, 15000);
+</script>
+</body>
+</html>

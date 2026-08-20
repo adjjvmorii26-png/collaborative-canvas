@@ -8,3 +8,7 @@ dist/
 build/
 .pytest_cache/
 WORKSPACE_PULSE.md
+node_modules/
+synthhall/node_modules/
+*.log
+agent_memory.json

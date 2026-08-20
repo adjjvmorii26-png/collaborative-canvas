@@ -111,3 +111,12 @@ Recipe YAML lives in `ixpansion/content_output/recipes/`, reports go to
 - `workforce oracle` — forecast from run history (accept rate, duration, score).
 - `workforce pulse [--no-commit]` — autopilot heartbeat: evolve + record `WORKSPACE_PULSE.md`.
 - `ixpansion auto "<input>" ... [--mock]` — route + batch-run inputs to their best recipes.
+
+## Local codespace (devcontainer)
+
+Open this repo in a GitHub Codespace or VS Code Dev Container; `.devcontainer/devcontainer.json`
+provisions Python 3.12 + Node 20, installs `PyYAML`, and creates `.env` from the template if missing.
+
+- Organism Console: `python3 ixpansion/organism-console/server.py --port 8890` → http://127.0.0.1:8890
+- One-shot launcher: `bash scripts/dev.sh` (console on :8890; set `CONSOLE_ONLY=0` to also start the control-room funding app)
+- Keys live in `.env` (gitignored). IXPANSION auto-routes to Grok when `XAI_API_KEY` is set, otherwise OpenAI.

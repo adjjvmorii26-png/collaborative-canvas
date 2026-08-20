@@ -1,0 +1,48 @@
+[
+  {
+    "id": "camp-20260818-003925",
+    "name": "Q3 Crypto Launch",
+    "status": "pending",
+    "budget": "5000.00",
+    "spend": "1250.00",
+    "impressions": 25000,
+    "clicks": 1250,
+    "ctr": 0.05,
+    "cpc": "1.00",
+    "start_date": "2026-08-18T00:39:25.642621",
+    "end_date": "2026-08-18T00:39:25.642629",
+    "target_audience": {
+      "interests": [
+        "crypto",
+        "nft",
+        "defi"
+      ],
+      "age_range": "18-45"
+    },
+    "ad_format": "skippable",
+    "created_at": "2026-08-18T00:39:25.642673"
+  },
+  {
+    "id": "camp-20260818-004142",
+    "name": "Q3 Crypto Launch",
+    "status": "pending",
+    "budget": "5000.00",
+    "spend": "1250.00",
+    "impressions": 25000,
+    "clicks": 1250,
+    "ctr": 0.05,
+    "cpc": "1.00",
+    "start_date": "2026-08-18T00:41:42.733791",
+    "end_date": "2026-08-18T00:41:42.733801",
+    "target_audience": {
+      "interests": [
+        "crypto",
+        "nft",
+        "defi"
+      ],
+      "age_range": "18-45"
+    },
+    "ad_format": "skippable",
+    "created_at": "2026-08-18T00:41:42.733856"
+  }
+]

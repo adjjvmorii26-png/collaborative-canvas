@@ -1,0 +1,56 @@
+[
+  {
+    "id": "msg-1787088227454",
+    "ts": "2026-08-18T21:23:47.454063+00:00",
+    "organ": "nervous",
+    "topic": "task-failed",
+    "severity": "crit",
+    "sender": "workforce",
+    "body": "run acdab81ee5 task t1 failed"
+  },
+  {
+    "id": "msg-1787088227459",
+    "ts": "2026-08-18T21:23:47.459546+00:00",
+    "organ": "nervous",
+    "topic": "task-blocked",
+    "severity": "crit",
+    "sender": "workforce",
+    "body": "run acdab81ee5 task t3 blocked"
+  },
+  {
+    "id": "msg-1787088227476",
+    "ts": "2026-08-18T21:23:47.476328+00:00",
+    "organ": "memory",
+    "topic": "run-finished",
+    "severity": "info",
+    "sender": "workforce",
+    "body": "run acdab81ee5: completed report=/root/Hub_spot/data/runs/acdab81ee5/report.md"
+  },
+  {
+    "id": "msg-1787096626825",
+    "ts": "2026-08-18T23:43:46.825872+00:00",
+    "organ": "circulatory",
+    "topic": "integration",
+    "severity": "info",
+    "sender": "integration",
+    "body": "integration check"
+  },
+  {
+    "id": "msg-1787096832212",
+    "ts": "2026-08-18T23:47:12.212315+00:00",
+    "organ": "circulatory",
+    "topic": "experiment-2",
+    "severity": "info",
+    "sender": "integration-test",
+    "body": "Experiment 2: Agent cross-pollination test"
+  },
+  {
+    "id": "msg-1787096859900",
+    "ts": "2026-08-18T23:47:39.900779+00:00",
+    "organ": "circulatory",
+    "topic": "experiment-2",
+    "severity": "info",
+    "sender": "integration-test",
+    "body": "Experiment 2: Agent cross-pollination test"
+  }
+]

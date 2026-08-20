@@ -1,0 +1,25 @@
+{
+  "name": "ixpansion-control-room",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k -n api,web \"npm:server\" \"vite\"",
+    "server": "node server.js",
+    "build": "vite build",
+    "preview": "vite preview",
+    "fixtures": "python3 scripts/export_fixtures.py"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "lucide-react": "^0.462.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "stripe": "^17.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "vite": "^6.0.7"
+  }
+}

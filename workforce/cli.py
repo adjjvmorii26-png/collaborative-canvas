@@ -217,6 +217,13 @@ def main(argv: list[str] | None = None) -> int:
     workforce = Workforce(cfg)
     if not args.quiet:
         workforce.bus.subscribe_all(_print_event)
+    # Organism console bridge: forward workforce events to the console
+    try:
+        from ixpansion.services.bodylink import WorkforceBridge
+        wb = WorkforceBridge()
+        workforce.bus.subscribe_all(wb.handle)
+    except Exception as exc:
+        print(f"[organism-bridge] disabled: {exc}", file=sys.stderr)
     try:
         if args.command == "plan":
             run = workforce.run(args.goal, run_id="plan-preview")

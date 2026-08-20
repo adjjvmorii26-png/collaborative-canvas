@@ -1,0 +1,11 @@
+[
+  {
+    "id": "lymphatic",
+    "label": "Lymphatic System",
+    "accent": "#8be9fd",
+    "icon": "cell",
+    "blurb": "Custom organ monitored by the console.",
+    "source": "ixpansion/content_output/reports",
+    "custom": true
+  }
+]

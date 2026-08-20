@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg-pulse-04" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#0a0e17" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="400" height="400" rx="20" fill="#0d1320" />
+  <rect width="400" height="400" rx="20" fill="url(#bg-pulse-04)" />
+      <circle cx="200" cy="200" r="62" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.297229646469904" />
+    <circle cx="200" cy="200" r="84" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.33403648450111856" />
+    <circle cx="200" cy="200" r="106" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.1716557113077374" />
+    <circle cx="200" cy="200" r="128" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.2842920576340311" />
+    <circle cx="200" cy="200" r="150" fill="none" stroke="#60a5fa" stroke-width="1" opacity="0.35083916583813635" />
+    <line x1="292.6" y1="205.7" x2="288.5" y2="239.3" stroke="#60a5fa" stroke-width="0.8" opacity="0.25" />
+    <line x1="292.6" y1="205.7" x2="272.5" y2="102.5" stroke="#60a5fa" stroke-width="0.8" opacity="0.25" />
+    <line x1="288.5" y1="239.3" x2="246.3" y2="318.8" stroke="#60a5fa" stroke-width="0.8" opacity="0.25" />
+    <line x1="246.3" y1="318.8" x2="167.6" y2="292.4" stroke="#60a5fa" stroke-width="0.8" opacity="0.25" />
+    <line x1="167.6" y1="292.4" x2="104.1" y2="235.5" stroke="#60a5fa" stroke-width="0.8" opacity="0.25" />
+    <circle cx="292.6" cy="205.7" r="3.6" fill="#60a5fa" opacity="0.8" />
+    <circle cx="288.5" cy="239.3" r="4.4" fill="#60a5fa" opacity="0.8" />
+    <circle cx="246.3" cy="318.8" r="5.8" fill="#60a5fa" opacity="0.8" />
+    <circle cx="167.6" cy="292.4" r="5.7" fill="#60a5fa" opacity="0.8" />
+    <circle cx="104.1" cy="235.5" r="4.3" fill="#60a5fa" opacity="0.8" />
+    <circle cx="68.2" cy="159.8" r="5.5" fill="#60a5fa" opacity="0.8" />
+    <circle cx="140.4" cy="109.4" r="3.7" fill="#60a5fa" opacity="0.8" />
+    <circle cx="201.4" cy="120.9" r="4.0" fill="#60a5fa" opacity="0.8" />
+    <circle cx="272.5" cy="102.5" r="4.6" fill="#60a5fa" opacity="0.8" />
+    <circle cx="200" cy="200" r="25" fill="#60a5fa" opacity="0.12" />
+    <circle cx="200" cy="200" r="8" fill="#60a5fa" opacity="0.9" />
+
+  <text x="200" y="370" text-anchor="middle" fill="#60a5fa" font-family="monospace" font-size="11" font-weight="bold" opacity="0.9">UNCOMMON</text>
+</svg>

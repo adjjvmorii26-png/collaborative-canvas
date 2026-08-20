@@ -1,0 +1,41 @@
+{
+  "assets": {
+    "BTC": "1.0",
+    "ETH": "2.5",
+    "SOL": "15.0",
+    "NFT-001": "0"
+  },
+  "nfts": {
+    "nft-0": {
+      "name": "Bitcoin",
+      "rarity": "common",
+      "value": "25000",
+      "added": "2026-08-17T23:57:45.758122"
+    },
+    "nft-1": {
+      "name": "Bitcoin",
+      "rarity": "common",
+      "value": "25000",
+      "added": "2026-08-18T00:00:10.245295"
+    },
+    "nft-2": {
+      "name": "Ethereum",
+      "rarity": "common",
+      "value": "1800",
+      "added": "2026-08-18T00:41:42.742368"
+    },
+    "nft-3": {
+      "name": "Solana",
+      "rarity": "uncommon",
+      "value": "25",
+      "added": "2026-08-18T00:41:42.747822"
+    },
+    "nft-4": {
+      "name": "Genesis Pulse",
+      "rarity": "mythic",
+      "value": "5000",
+      "added": "2026-08-18T00:41:42.751465"
+    }
+  },
+  "last_updated": "2026-08-18T00:41:42.751493"
+}
