@@ -76,6 +76,9 @@ def _build_parser() -> argparse.ArgumentParser:
     init_ = sub.add_parser("init", help="write workforce.yaml and .env.example")
     clean_ = sub.add_parser("clean", help="delete runtime artifacts (data/, __pycache__, generated reports)")
     clean_.add_argument("--yes", action="store_true", help="skip confirmation")
+    lab = sub.add_parser("lab", help="run automation hub (cleanup, synchronicity, income plan)")
+    lab.add_argument("--mode", choices=["run", "cleanup", "report", "income"], default="run")
+    lab.add_argument("--json", action="store_true", help="emit machine-readable result")
     return parser
 
 
@@ -211,6 +214,29 @@ def main(argv: list[str] | None = None) -> int:
             if target and r["run_id"] != target:
                 continue
             print(f"{r['run_id']} {r['status']:<10} {r['goal'][:70]} report={r['report_path'] or '-'}")
+        return 0
+
+    if args.command == "lab":
+        from .automation.lab_hub import LabAutomationHub
+
+        hub = LabAutomationHub()
+        if args.mode == "cleanup":
+            result = hub.run_cleanup()
+            print(json.dumps(result, indent=2) if args.json else result)
+            return 0
+        if args.mode == "report":
+            snapshot = hub._snapshot()
+            report = hub.synchronicity.generate_report(snapshot)
+            print(report)
+            return 0
+        if args.mode == "income":
+            snapshot = hub._snapshot()
+            patterns = hub.synchronicity.detect_synchronicity(snapshot)
+            plan = hub.build_income_plan(snapshot, patterns)
+            print(json.dumps(plan, indent=2) if args.json else "\n".join(f"- {item}" for item in plan))
+            return 0
+        result = hub.run_cycle()
+        print(json.dumps(result, indent=2) if args.json else json.dumps(result, indent=2))
         return 0
 
     cfg = load_config(overrides=_overrides(args))

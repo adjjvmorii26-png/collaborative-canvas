@@ -1,0 +1,14 @@
+{
+  "name": "synthhall",
+  "version": "0.1.0",
+  "description": "SynthHall - Advanced arena for agent interactions with mood-aware replies and memory persistence",
+  "main": "arena.js",
+  "scripts": {
+    "start": "node arena.js",
+    "smoke": "node scripts/realtime-smoke.mjs",
+    "demo": "node scripts/browser-demo.js"
+  },
+  "keywords": ["agents", "arena", "mood", "memory", "ixpansion"],
+  "author": "IXPANSION",
+  "license": "MIT"
+}
