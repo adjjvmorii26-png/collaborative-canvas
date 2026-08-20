@@ -11,26 +11,9 @@ const io = new Server(server);
 
 app.use(express.json());
 
-// Seed: lobby + two arena rooms; attach catalog agents to arena rooms.
 function seed() {
-  agentLib.ensureCatalog();
-    const lobby = store.getRoom('lobby');
-  if (!lobby) {
-    store.rooms().push({
-      id: 'lobby', name: 'Lobby', createdByUserId: 'system',
-      isPublic: true, arena: { type: 'debate', topic: 'what should we build today?', rules: ['everyone gets a turn', 'be specific'] },
-    });
-  }
-  for (const [rid, name, arenaCfg] of [
-    ['design-pit', 'Design Pit', { type: 'design', topic: 'design the next great interface', rules: ['sketch first', 'critique kindly'] }],
-    ['story-forge', 'Story Forge', { type: 'story', topic: 'a world where humans and AIs build together', rules: ['yes-and', 'keep the twist hidden'] }],
-  ]) {
-    if (!store.getRoom(rid)) {
-      store.rooms().push({ id: rid, name, createdByUserId: 'system', isPublic: true, arena: arenaCfg });
-    }
-  }
-  // Pre-bind catalog agents to the arena rooms for instant vibe.
-  // Idempotent across boots: skip any (roomId, agentId) already persisted.
+  store.loadAgentMemory();
+  // idempotent: skip (roomId, agentId) already persisted
   for (const rid of ['design-pit', 'story-forge']) {
     for (const a of store.agents()) {
       const bound = store.bindingsFor(rid).some((b) => b.agentId === a.id);
@@ -44,20 +27,10 @@ function seed() {
 }
 seed();
 
-// --- API surface -------------------------------------------------------
+// --- API surface ---
 
 app.get('/rooms', (_req, res) => {
   res.json(store.rooms().map((r) => ({ id: r.id, name: r.name, arena: r.arena || null, isPublic: r.isPublic })));
-});
-
-app.get('/agents', (_req, res) => {
-  res.json(store.agents());
-});
-
-app.get('/rooms/:id/bindings', (req, res) => {
-  const room = store.getRoom(req.params.id);
-  if (!room) return res.status(404).json({ error: 'room not found' });
-  res.json(store.bindingsFor(room.id));
 });
 
 app.get('/rooms/:id/messages', (req, res) => {
@@ -88,7 +61,11 @@ app.post('/rooms/:id/messages', async (req, res) => {
     const agent = store.getAgent(b.agentId);
     if (!agent) continue;
     const history = store.messagesFor(room.id).slice(-12).map((m) => ({ role: m.authorType, content: m.content }));
-    const replyContent = await agentLib.generate({ agent, history, arenaConfig: room.arena });
+    // inject memory line so agent can refer to its own past
+    const memory = store.getAgentMemory(agent.id, room.id);
+    const memoryLine = memory.length > 0 ? 'Recent from ' + agent.name + ': ' + memory.slice(-3).map((m) => m.content).join('; ') : '';
+    const enrichedHist = memory.length > 0 ? [{role:'system', content: memoryLine}, ...hist] : hist;
+    const replyContent = await agentLib.shapeReply(agent.role, enrichedHist, room.arena, agent);
     const agentMsg = store.addMessage({
       id: store.id('msg'), roomId: room.id,
       authorType: 'agent', authorId: agent.id, authorName: agent.name,
@@ -107,7 +84,7 @@ app.post('/agents/attach', (req, res) => {
 
   let agent = store.agents().find((a) => a.name.toLowerCase() === String(agentName).toLowerCase());
   if (!agent) {
-    agent = { id: store.id('agent'), ownerUserId: 'guest', name: agentName, provider: 'local', role, config: {} };
+    agent = { id: store.id('agent'), ownerUserId: 'guest', name: agentName, provider: 'local', role, mood: { energy: 0.5, focus: 0.5, curiosity: 0.5 }, ideaPool: [], config: {} };
     store.agents().push(agent);
   }
   const already = store.bindingsFor(roomId).some((b) => b.agentId === agent.id);
@@ -116,7 +93,7 @@ app.post('/agents/attach', (req, res) => {
   res.json({ status: true, agent, already });
 });
 
-// --- Realtime ----------------------------------------------------------
+// --- Realtime ---
 
 io.on('connection', (socket) => {
   const roomId = socket.handshake.query.roomId;
@@ -124,7 +101,7 @@ io.on('connection', (socket) => {
   socket.on('room:join', (rid) => { if (rid) socket.join(rid); });
 });
 
-// --- Web app -----------------------------------------------------------
+// --- Web app ---
 
 app.use(express.static(path.join(__dirname, '..', 'web', 'public')));
 
