@@ -6,7 +6,7 @@ const path = require('path');
 
 // Arena configuration
 const CONFIG = {
-  port: 4000,
+  port: 8891,
   moodJitter: 0.1,  // ±0.1 jitter for mood parameters
   memoryRetention: 8,  // last 8 messages per agent+room
   rooms: {},
@@ -78,7 +78,7 @@ function shapeReply(agentId, roomId, context) {
   const recentMessages = memory.slice(-8).map(m => `${m.agent}: ${m.message}`).join('\n');
   
   // Build reply with mood awareness and memory injection
-  const reply = `🧠 [Mood: energy=${jitteredMood.toFixed(2)}, focus=${jitteredMood.focus.toFixed(2)}, curiosity=${jitteredMood.curiosity.toFixed(2)}]\n` +
+  const reply = `🧠 [Mood: energy=${jitteredMood.energy.toFixed(2)}, focus=${jitteredMood.focus.toFixed(2)}, curiosity=${jitteredMood.curiosity.toFixed(2)}]\n` +
     `🤖 Agent ${agentId} in room ${roomId} responds:\n` +
     `Based on context: ${context.substring(0, 100)}...\n` +
     `Recent memory (last 8): ${recentMessages.substring(0, 200)}...\n` +
@@ -136,8 +136,8 @@ const server = http.createServer((req, res) => {
     `;
     res.setHeader('Content-Type', 'text/html');
     res.end(html);
-  } else if (url === '/reply') {
-    const qs = new URLSearchParams(url.query);
+  } else if (url.startsWith('/reply')) {
+    const parsedUrl = new URL(url, "http://localhost"); const qs = parsedUrl.searchParams;
     const agentId = qs.get('agent') || 'default';
     const roomId = qs.get('room') || 'general';
     const context = qs.get('ctx') || 'No context provided';

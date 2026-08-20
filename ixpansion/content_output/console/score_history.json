@@ -257,5 +257,47 @@
     "organs": 10,
     "provider": "openai",
     "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-20T18:14:47.071637+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-20T18:20:37.307105+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-20T18:23:58.909333+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-20T18:49:14.065845+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-20T18:53:42.374894+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  {
+    "ts": "2026-08-20T18:57:05.091010+00:00",
+    "score": 98.0,
+    "organs": 10,
+    "provider": "openai",
+    "model": "gpt-4o-mini"
   }
 ]
