@@ -4,6 +4,10 @@ on:
     paths: ["ixpansion/**"]
   schedule:
     - cron: "0 2 * * *"
+
+permissions:
+  contents: read
+
 jobs:
   eval:
     runs-on: ubuntu-latest
